@@ -24,6 +24,19 @@ $catalogo = [
                 'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Pepperoni'],
                 'precios'      => ['personal' => 195, 'mediana' => 230, 'familiar' => 280, 'gigante' => 325],
             ],
+            [
+                'nombre'       => 'Hawaiana',
+                'imagen'       => 'img/hawaiana.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Jamón', 'Piña'],
+                'precios'      => ['personal' => 95, 'mediana' => 130, 'familiar' => 180, 'gigante' => 225],
+            ],
+            [
+                'nombre'       => 'Cuatro Quesos',
+                'imagen'       => 'img/cuatro-quesos.jpg',
+                'ingredientes' => ['Mozzarella', 'Gorgonzola', 'Parmesano', 'Provolone'],
+                'precios'      => ['personal' => 100, 'mediana' => 140, 'familiar' => 190, 'gigante' => 240],
+            ],
+            
         ],
     ],
 
@@ -42,6 +55,18 @@ $catalogo = [
                 'imagen'       => 'img/trufada.jpg',
                 'ingredientes' => ['Mozzarella', 'Crema de trufa', 'Champiñones', 'Aceite de trufa'],
                 'precios'      => ['personal' => 230, 'mediana' => 275, 'familiar' => 340, 'gigante' => 405],
+            ],
+            [
+                'nombre'       => 'Frutti di Mare',
+                'imagen'       => 'img/frutti-di-mare.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mariscos mixtos', 'Ajo', 'Perejil'],
+                'precios'      => ['personal' => 125, 'mediana' => 170, 'familiar' => 235, 'gigante' => 300],
+            ],
+            [
+                'nombre'       => 'Carnívora Suprema',
+                'imagen'       => 'img/carnivora.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Salchicha', 'Pepperoni', 'Tocino', 'Carne molida'],
+                'precios'      => ['personal' => 135, 'mediana' => 180, 'familiar' => 250, 'gigante' => 315],
             ],
         ],
     ],
@@ -62,6 +87,18 @@ $catalogo = [
                 'ingredientes' => ['Espinaca', 'Champiñones', 'Ricota', 'Mozzarella'],
                 'precio'       => 200,
             ],
+            [
+                'nombre'       => 'Focaccia con Romero',
+                'imagen'       => 'img/focaccia.jpg',
+                'ingredientes' => ['Aceite de oliva', 'Romero', 'Sal de mar'],
+                'precio'       => 75,
+            ],
+             [
+                'nombre'       => 'Calzone de avellanas',
+                'imagen'       => 'img/avellanas.jpg',
+                'ingredientes' => ['Crema de avellanas con cacao', 'Avellanas picadas', 'Azúcar glass'],
+                'precio'       => 75,
+            ],
         ],
     ],
 
@@ -80,6 +117,18 @@ $catalogo = [
                 'imagen'       => 'img/cannoli.jpg',
                 'ingredientes' => ['Ricota', 'Canela', 'Pistachos'],
                 'precio'       => 90,
+            ],
+            [
+                'nombre'       => 'Bebidas gaseosas',
+                'imagen'       => 'img/gaseosas.jpg',
+                'ingredientes' => ['Coca-Cola', 'Fanta', 'Sprite'],
+                'precio'       => 25,
+            ],
+            [
+                'nombre'       => 'Refrescos naturales',
+                'imagen'       => 'img/refrescos.jpg',
+                'ingredientes' => ['Limonada', 'Jamaica', 'Naranja'],
+                'precio'       => 30,
             ],
         ],
     ],
