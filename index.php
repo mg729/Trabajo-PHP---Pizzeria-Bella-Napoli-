@@ -1,5 +1,31 @@
 <?php
-
+//Pizzas insignias del dia
+$pizzas = [
+    [
+        "nombre" => "Pizza margarita",
+        "imagen" => "",
+        "ingredientes" => "Salsa pomodoro, mozzarella fresco, albahaca y aceite de oliva.",
+        "precio" => 83.32,
+        "badge" => "2x1 Martes",
+        "color_badge" => "danger",
+    ],
+    [
+        "nombre" => "Pizza margarita",
+        "imagen" => "",
+        "ingredientes" => "Salsa pomodoro, mozzarella fresco, albahaca y aceite de oliva.",
+        "precio" => 83.32,
+        "badge" => "2x1 Martes",
+        "color_badge" => "danger",
+    ],
+    [
+        "nombre" => "Pizza margarita",
+        "imagen" => "",
+        "ingredientes" => "Salsa pomodoro, mozzarella fresco, albahaca y aceite de oliva.",
+        "precio" => 83.32,
+        "badge" => "2x1 Martes",
+        "color_badge" => "danger",
+    ],  
+];
 
 ?>
 
@@ -73,7 +99,45 @@
         </div>
     </header>
 
-    <!--Insignias-->
+    <!--Pizzas Insignias: plantilla de las cards-->
+    <section class="py-5 bg-dark">
+        <article class="container">
+            <div class=" text-white text-center mb-5">
+                <h2 class="fw-bold mb-1">Pizzas Insignias del Dia</h2>
+                <p class="text-muted">Las seleccionadas de hoy ¡Solo para ti!</p>
+            </div>
+        </article>
+
+        <article class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- plantilla card -->
+            <div class="col">
+                
+                <div class="card h-100 shadow-md border-1">
+                    <span class="badge ">
+                        <!---->
+                    </span>
+                    <div class="ratio ratio-4x3">
+                        <!---->
+                        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hogarmania.com%2Farchivos%2F202303%2Fpizza-margarita-portada-848x477x80xX.jpg&f=1&nofb=1&ipt=c91360068d38e6380d03f93765f899d3d9ddc2fc839653ee90170cb731be79d4&ipo=images" alt="pizza-card">
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title h5 fw-bold">
+                            Titulo
+                        </h3>
+                        <p class="card-text text-muted">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, atque!
+                        </p>
+                        <p class="fs-5 fw-semibold text-danger mt-auto mb-3">
+                            Precio
+                        </p>
+                        <a class="btn btn-outline-danger" href="Catalogo.php">Ver el catalogo</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </article>
+    </section>
 
     <!--Promociones-->
 
