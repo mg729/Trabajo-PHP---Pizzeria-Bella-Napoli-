@@ -37,6 +37,33 @@ $catalogo = [
                 'precios'      => ['personal' => 100, 'mediana' => 140, 'familiar' => 190, 'gigante' => 240],
             ],
             
+
+
+            [
+                'nombre'       => 'Vegetariana',
+                'imagen'       => 'img/vegetariana.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Pimentón', 'Cebolla', 'Champiñones', 'Aceitunas'],
+                'precios'      => ['personal' => 90, 'mediana' => 125, 'familiar' => 175, 'gigante' => 215],
+            ],
+            [
+                'nombre'       => 'Mexicana',
+                'imagen'       => 'img/mexicana.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Carne molida', 'Chile jalapeño', 'Cebolla'],
+                'precios'      => ['personal' => 100, 'mediana' => 135, 'familiar' => 185, 'gigante' => 230],
+            ],
+            [
+                'nombre'       => 'Española',
+                'imagen'       => 'img/espanola.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Chorizo', 'Pimiento rojo', 'Aceitunas'],
+                'precios'      => ['personal' => 105, 'mediana' => 140, 'familiar' => 195, 'gigante' => 245],
+            ],
+            [
+                'nombre'       => 'Napolitana',
+                'imagen'       => 'img/napolitana.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Anchoas', 'Alcaparras', 'Orégano'],
+                'precios'      => ['personal' => 100, 'mediana' => 135, 'familiar' => 185, 'gigante' => 230],
+            ],
+            
         ],
     ],
 
@@ -67,6 +94,33 @@ $catalogo = [
                 'imagen'       => 'img/carnivora.jpg',
                 'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Salchicha', 'Pepperoni', 'Tocino', 'Carne molida'],
                 'precios'      => ['personal' => 135, 'mediana' => 180, 'familiar' => 250, 'gigante' => 315],
+            ],
+            
+
+
+            [
+                'nombre'       => 'Pollo BBQ',
+                'imagen'       => 'img/pollo-bbq.jpg',
+                'ingredientes' => ['Salsa barbacoa', 'Mozzarella', 'Pollo', 'Cebolla morada', 'Maíz'],
+                'precios'      => ['personal' => 115, 'mediana' => 160, 'familiar' => 225, 'gigante' => 285],
+            ],
+            [
+                'nombre'       => 'Pesto Genovese',
+                'imagen'       => 'img/pesto.jpg',
+                'ingredientes' => ['Pesto de albahaca', 'Mozzarella', 'Tomate cherry', 'Piñones'],
+                'precios'      => ['personal' => 120, 'mediana' => 165, 'familiar' => 230, 'gigante' => 290],
+            ],
+            [
+                'nombre'       => 'Diavola',
+                'imagen'       => 'img/diavola.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Salami picante', 'Chile', 'Aceite de oliva'],
+                'precios'      => ['personal' => 125, 'mediana' => 170, 'familiar' => 235, 'gigante' => 295],
+            ],
+            [
+                'nombre'       => 'Burrata y Tomate',
+                'imagen'       => 'img/burrata.jpg',
+                'ingredientes' => ['Burrata', 'Tomate cherry', 'Albahaca', 'Aceite de oliva'],
+                'precios'      => ['personal' => 130, 'mediana' => 175, 'familiar' => 240, 'gigante' => 305],
             ],
         ],
     ],
@@ -99,6 +153,33 @@ $catalogo = [
                 'ingredientes' => ['Crema de avellanas con cacao', 'Avellanas picadas', 'Azúcar glass'],
                 'precio'       => 75,
             ],
+            
+
+            
+            [
+                'nombre'       => 'Calzone Hawaiano',
+                'imagen'       => 'img/calzone-hawaiano.jpg',
+                'ingredientes' => ['Jamón', 'Piña', 'Mozzarella'],
+                'precio'       => 110,
+            ],
+            [
+                'nombre'       => 'Focaccia de Ajo y Queso',
+                'imagen'       => 'img/focaccia-ajo.jpg',
+                'ingredientes' => ['Ajo', 'Queso parmesano', 'Aceite de oliva'],
+                'precio'       => 85,
+            ],
+            [
+                'nombre'       => 'Calzone Napolitano',
+                'imagen'       => 'img/calzone-napolitano.jpg',
+                'ingredientes' => ['Salsa de tomate', 'Mozzarella', 'Jamón', 'Champiñones'],
+                'precio'       => 112,
+            ],
+            [
+                'nombre'       => 'Focaccia Caprese',
+                'imagen'       => 'img/focaccia-caprese.jpg',
+                'ingredientes' => ['Tomate', 'Mozzarella', 'Albahaca', 'Aceite de oliva'],
+                'precio'       => 90,
+            ],
         ],
     ],
 
@@ -129,6 +210,30 @@ $catalogo = [
                 'imagen'       => 'img/refrescos.jpg',
                 'ingredientes' => ['Limonada', 'Jamaica', 'Naranja'],
                 'precio'       => 30,
+            ],
+            [
+                'nombre'       => 'Panna cotta',
+                'imagen'       => 'img/panna-cotta.jpg',
+                'ingredientes' => ['Crema para batir', 'Azúcar', 'Vainilla', 'Gelatina'],
+                'precio'       => 60,
+            ],
+            [
+                'nombre'       => 'Gelato de vainilla',
+                'imagen'       => 'img/gelato.jpg',
+                'ingredientes' => ['Leche', 'Crema', 'Vainilla natural'],
+                'precio'       => 50,
+            ],
+            [
+                'nombre'       => 'Limonada italiana',
+                'imagen'       => 'img/limonada.jpg',
+                'ingredientes' => ['Limón', 'Agua mineral', 'Menta'],
+                'precio'       => 35,
+            ],
+            [
+                'nombre'       => 'Affogato',
+                'imagen'       => 'img/affogato.jpg',
+                'ingredientes' => ['Gelato de vainilla', 'Café espresso'],
+                'precio'       => 60,
             ],
         ],
     ],
