@@ -27,6 +27,52 @@ $pizzas = [
     ]
 ];
 
+//Promociones
+$promociones = [
+    [
+        "titulo" => "2x1 los Martes",
+        "descripcion" => "Pide una pizza clásica y llévate otra gratis todos los martes.",
+        "badge" => "Martes",
+        "color_badge" => "danger",
+        "icono" => "bi-calendar-check",
+    ],
+    [
+        "titulo" => "10% de descuento",
+        "descripcion" => "Ordena 3 o más pizzas y el descuento se aplica automáticamente.",
+        "badge" => "Volumen",
+        "color_badge" => "success",
+        "icono" => "bi-percent",
+    ],
+    [
+        "titulo" => "Delivery a L. 45.00",
+        "descripcion" => "Recibe tu pizza caliente en la puerta de tu casa.",
+        "badge" => "Envio",
+        "color_badge" => "warning text-dark",
+        "icono" => "bi-bicycle",
+    ],
+];
+
+//Testimonios
+$testimonios = [
+    [
+        "nombre" => "Carlos M.",
+        "ciudad" => "Tegucigalpa",
+        "comentario" => "La mejor pizza al horno de leña que he probado en Honduras. La masa es perfecta.",
+        "estrellas" => 5,
+    ],
+    [
+        "nombre" => "Ana R.",
+        "ciudad" => "San Pedro Sula",
+        "comentario" => "Pedí a domicilio y llegó caliente y a tiempo. Ya es nuestra pizzería de los viernes.",
+        "estrellas" => 5,
+    ],
+    [
+        "nombre" => "Luis P.",
+        "ciudad" => "La Ceiba",
+        "comentario" => "Armé mi propia pizza y quedó increíble. Los ingredientes se sienten frescos.",
+        "estrellas" => 4,
+    ],
+];
 ?>
 
 <!DOCTYPE html>
@@ -60,11 +106,11 @@ $pizzas = [
             <!--menu desplegable-->
             <div class="collapse navbar-collapse" id="menuNavegacion">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li><a class="nav-link px-3" href="index.php">Inicio</a></li>
-                    <li><a class="nav-link px-3" href="Catalogo.php">Catalogo</a></li>
-                    <li><a class="nav-link px-3" href="">Arma tu pizza</a></li>
-                    <li><a class="nav-link px-3" href="">Pedidos</a></li>
-                    <li><a class="nav-link px-3" href="">Sucursales y contacto</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Arma tu pizza</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Pedidos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
             </div>
         </div>
@@ -142,8 +188,49 @@ $pizzas = [
     </section>
 
     <!--Promociones-->
+    
 
+    
     <!--Historias y tesmimonios-->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-1">Mira lo que dicen nuestros Clientes</h2>
+                <p class="text-muted">Clientes satisfechos en todo Honduras.</p>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <?php foreach ($testimonios as $t): ?>
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-1">
+                        <div class="card-body d-flex flex-column">
+                            <div class="mb-3">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <i class="bi <?= $i <= $t['estrellas'] ? 'bi-star-fill text-warning' : 'bi-star text-warning' ?>"></i>
+                                <?php endfor; ?>
+                            </div>
+
+                            <p class="card-text fst-italic flex-grow-1">
+                                “<?= htmlspecialchars($t['comentario'], ENT_QUOTES, 'UTF-8') ?>”
+                            </p>
+                            <div class="d-flex align-items-center mt-3">
+                                <i class="bi bi-person-circle fs-2 text-danger me-2"></i>
+                                <div>
+                                    <p class="fw-bold mb-0">
+                                        <?= htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8') ?>
+                                    </p>
+                                    <small class="text-muted">
+                                        <?= htmlspecialchars($t['ciudad'], ENT_QUOTES, 'UTF-8') ?>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
 
     <!--footer-->
 
