@@ -31,14 +31,14 @@ $pizzas = [
 $promociones = [
     [
         "titulo" => "2x1 los Martes",
-        "descripcion" => "Pide una pizza clásica y llévate otra gratis todos los martes.",
+        "descripcion" => "Pide una pizza de pepperoni y lleva otra gratis todos los martes.",
         "badge" => "Martes",
         "color_badge" => "danger",
         "icono" => "bi-calendar-check",
     ],
     [
         "titulo" => "10% de descuento",
-        "descripcion" => "Ordena 3 o más pizzas y el descuento se aplica automáticamente.",
+        "descripcion" => "Ordena 3 o mas pizzas y el descuento se aplica automaticamente.",
         "badge" => "Volumen",
         "color_badge" => "success",
         "icono" => "bi-percent",
@@ -94,7 +94,7 @@ $testimonios = [
     <nav class="navbar navbar-expand-lg sticky-top bg-danger">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="index.php">
-                <span><i>Bella Napoli</i></span>
+                <span class="text-white"><i>Bella<span class="text-warning">Napoli</span></i></span>
             </a>
             <!--btn hamburguesa-->
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
@@ -188,7 +188,35 @@ $testimonios = [
     </section>
 
     <!--Promociones-->
-    
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-1">Promociones Disponibles</h2>
+                <p class="text-muted">Aprovecha estas ofertas de Bella Napoli</p>
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <?php foreach ($promociones as $promo): ?>
+                <div class="col">
+                    <div class="card h-100 text-center shadow-sm border-0">
+                        <div class="card-body d-flex flex-column align-items-center">
+                            <i class="bi <?= htmlspecialchars($promo['icono'], ENT_QUOTES, 'UTF-8') ?> display-4 text-danger mb-3"></i>
+                            <span class="badge bg-<?= htmlspecialchars($promo['color_badge'], ENT_QUOTES, 'UTF-8') ?> mb-2">
+                                <?= htmlspecialchars($promo['badge'], ENT_QUOTES, 'UTF-8') ?>
+                            </span>
+                            <h3 class="h5 fw-bold">
+                                <?= htmlspecialchars($promo['titulo'], ENT_QUOTES, 'UTF-8') ?>
+                            </h3>
+                            <p class="card-text text-muted mb-0">
+                                <?= htmlspecialchars($promo['descripcion'], ENT_QUOTES, 'UTF-8') ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
 
     
     <!--Historias y tesmimonios-->
@@ -233,7 +261,58 @@ $testimonios = [
     </section>
 
     <!--footer-->
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4">
 
+                <!--Logo y banner-->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h3 class="fw-bold fst-italic mb-3">Bella<span class="text-warning">Napoli</span></h3>
+                    <p class="text-white-50 mb-0">
+                        Autentica pizza italiana horneada con leña, usando los ingredientes mas frescos y la receta tradicional que cautiva los paladares en todo Honduras.
+                    </p>
+                </div>
+
+                <!--Horarios-->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Horarios de cocina</h4>
+                    <ul class="list-unstyled text-white-50 mb-0">
+                        <li class="mb-2"><i class="bi bi-clock me-2"></i>Lunes a Jueves: 11:00 a.m. - 9:00 p.m.</li>
+                        <li class="mb-2"><i class="bi bi-clock me-2"></i>Viernes y Sábado: 11:00 a.m. - 11:00 p.m.</li>
+                        <li><i class="bi bi-clock me-2"></i>Domingo: 12:00 p.m. - 8:00 p.m.</li>
+                    </ul>
+                </div>
+
+                <!--Contacto-->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Contacto</h4>
+                    <ul class="list-unstyled text-white-50 mb-0">
+                        <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Blvd. Morazán, Tegucigalpa, Honduras</li>
+                        <li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>+504 2222-3333</li>
+                        <li><i class="bi bi-envelope-fill me-2"></i>contacto@bellanapoli.hn</li>
+                    </ul>
+                </div>
+
+                <!--Redes sociales-->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Siguenos</h4>
+                    <div class="d-flex gap-3 fs-3">
+                        <a class="text-white" href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a class="text-white" href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a class="text-white" href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                        <a class="text-white" href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Derechos-->
+            <hr class="border-secondary my-4">
+            <p class="text-center text-white-50 small mb-0">
+                &copy; 2026 Pizzeria <i>Bella Napoli</i>. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
 
     <!--Js Bootstrap-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
