@@ -3,28 +3,28 @@
 $pizzas = [
     [
         "nombre" => "Pizza margarita",
-        "imagen" => "",
+        "imagen" => "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hogarmania.com%2Farchivos%2F202303%2Fpizza-margarita-portada-848x477x80xX.jpg&f=1&nofb=1&ipt=c91360068d38e6380d03f93765f899d3d9ddc2fc839653ee90170cb731be79d4&ipo=images",
         "ingredientes" => "Salsa pomodoro, mozzarella fresco, albahaca y aceite de oliva.",
         "precio" => 83.32,
         "badge" => "2x1 Martes",
         "color_badge" => "danger",
     ],
     [
-        "nombre" => "Pizza margarita",
-        "imagen" => "",
+        "nombre" => "Pizza pepperoni",
+        "imagen" => "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fassets.afcdn.com%2Frecipe%2F20190319%2F89655_w3072h2304c1cx3680cy2456.jpg&f=1&nofb=1&ipt=faba779b0fbfbb35b03c66df3c18609209967ff1f6f1b258733b2fcf27fa6ccb&ipo=images",
         "ingredientes" => "Salsa pomodoro, mozzarella fresco, albahaca y aceite de oliva.",
-        "precio" => 83.32,
-        "badge" => "2x1 Martes",
-        "color_badge" => "danger",
+        "precio" => 162.32,
+        "badge" => "Favorita del chef",
+        "color_badge" => "warning text-dark",
     ],
     [
-        "nombre" => "Pizza margarita",
-        "imagen" => "",
-        "ingredientes" => "Salsa pomodoro, mozzarella fresco, albahaca y aceite de oliva.",
-        "precio" => 83.32,
-        "badge" => "2x1 Martes",
-        "color_badge" => "danger",
-    ],  
+        "nombre" => "Pizza Suprema",
+        "imagen" => "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.freepik.com%2Ffotos-premium%2Fpizza-suprema-tradicional-aislado-sobre-fondo-blanco_590796-1929.jpg%3Fw%3D2000&f=1&nofb=1&ipt=b875ee383b341745670a5dee7fb4489de59b68021f0ee14dcf7daec5838b53ac&ipo=images",
+        "ingredientes" => "Pepperoni, chile verde y champiñones.",
+        "precio" => 120.74,
+        "badge" => "Popular",
+        "color_badge" => "success",
+    ]
 ];
 
 ?>
@@ -61,7 +61,7 @@ $pizzas = [
             <div class="collapse navbar-collapse" id="menuNavegacion">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li><a class="nav-link px-3" href="index.php">Inicio</a></li>
-                    <li><a class="nav-link px-3" href="">Catalogo</a></li>
+                    <li><a class="nav-link px-3" href="Catalogo.php">Catalogo</a></li>
                     <li><a class="nav-link px-3" href="">Arma tu pizza</a></li>
                     <li><a class="nav-link px-3" href="">Pedidos</a></li>
                     <li><a class="nav-link px-3" href="">Sucursales y contacto</a></li>
@@ -71,7 +71,7 @@ $pizzas = [
     </nav>
 
     <!--Hero-->
-    <header class="bg-gradient text-black mt-4">
+    <header class="bg-gradient text-black my-5">
         <div class="container">
             <div class="row align-items-center g-4">
 
@@ -100,42 +100,44 @@ $pizzas = [
     </header>
 
     <!--Pizzas Insignias: plantilla de las cards-->
-    <section class="py-5 bg-dark">
+    <section class="bg-dark py-5 my-5">
         <article class="container">
             <div class=" text-white text-center mb-5">
                 <h2 class="fw-bold mb-1">Pizzas Insignias del Dia</h2>
-                <p class="text-muted">Las seleccionadas de hoy ¡Solo para ti!</p>
+                <p class="text-white">Las seleccionadas de hoy ¡Solo para ti!</p>
             </div>
         </article>
 
-        <article class="row row-cols-1 row-cols-md-3 g-4">
-            <!-- plantilla card -->
+        <article class="row row-cols-1 row-cols-md-3 g-4 mx-2">
+            <?php foreach ($pizzas as $pizza): ?>
             <div class="col">
-                
                 <div class="card h-100 shadow-md border-1">
-                    <span class="badge ">
-                        <!---->
+
+
+                    <span class="badge bg-<?= htmlspecialchars($pizza['color_badge'], ENT_QUOTES, 'UTF-8') ?>  position-absolute top-0 end-0 m-3 z-1">
+                        <?= htmlspecialchars($pizza['badge'], ENT_QUOTES, 'UTF-8') ?>
                     </span>
+
                     <div class="ratio ratio-4x3">
-                        <!---->
-                        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hogarmania.com%2Farchivos%2F202303%2Fpizza-margarita-portada-848x477x80xX.jpg&f=1&nofb=1&ipt=c91360068d38e6380d03f93765f899d3d9ddc2fc839653ee90170cb731be79d4&ipo=images" alt="pizza-card">
+                        <img class="card-img-top object-fit-cover" src="<?= htmlspecialchars($pizza['imagen'], ENT_QUOTES, 'UTF-8') ?>" alt="pizza-card">
                     </div>
 
                     <div class="card-body d-flex flex-column">
                         <h3 class="card-title h5 fw-bold">
-                            Titulo
+                            <?= htmlspecialchars($pizza['nombre'], ENT_QUOTES, 'UTF-8') ?>
                         </h3>
                         <p class="card-text text-muted">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, atque!
+                            <?= htmlspecialchars($pizza['ingredientes'], ENT_QUOTES, 'UTF-8') ?>
                         </p>
                         <p class="fs-5 fw-semibold text-danger mt-auto mb-3">
-                            Precio
+                            Desde L. <?= number_format($pizza['precio'], 2)?>
                         </p>
                         <a class="btn btn-outline-danger" href="Catalogo.php">Ver el catalogo</a>
                     </div>
                     
                 </div>
             </div>
+            <?php endforeach; ?>
         </article>
     </section>
 
