@@ -22,13 +22,13 @@
                 aria-label="Abrir navegación">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="menuNavegacion">
+           <div class="collapse navbar-collapse" id="menuNavegacion">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
-                    <li><a class="nav-link px-3" href="index.php">Inicio</a></li>
-                    <li><a class="nav-link px-3" href="Catalogo.php">Catalogo</a></li>
-                    <li><a class="nav-link px-3" href="#">Arma tu pizza</a></li>
-                    <li><a class="nav-link px-3" href="#">Pedidos</a></li>
-                    <li><a class="nav-link px-3" href="#">Sucursales y contacto</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="arma_pizza.php">Arma tu pizza</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="pedidos.php">Pedidos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
             </div>
         </div>
@@ -107,7 +107,7 @@
         <div class="container">
             <div class="row g-4">
 
-                <!--Logo y banner-->
+                
                 <div class="col-12 col-md-6 col-lg-3">
                     <h3 class="fw-bold fst-italic mb-3">Bella<span class="text-warning">Napoli</span></h3>
                     <p class="text-white-50 mb-0">
@@ -115,7 +115,7 @@
                     </p>
                 </div>
 
-                <!--Horarios-->
+              
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Horarios de cocina</h4>
                     <ul class="list-unstyled text-white-50 mb-0">
@@ -124,8 +124,6 @@
                         <li><i class="bi bi-clock me-2"></i>Domingo: 12:00 p.m. - 8:00 p.m.</li>
                     </ul>
                 </div>
-
-                <!--Contacto-->
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Contacto</h4>
                     <ul class="list-unstyled text-white-50 mb-0">
@@ -135,7 +133,7 @@
                     </ul>
                 </div>
 
-                <!--Redes sociales-->
+          
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Siguenos</h4>
                     <div class="d-flex gap-3 fs-3">
@@ -148,7 +146,7 @@
 
             </div>
 
-            <!--Derechos-->
+           
             <hr class="border-secondary my-4">
             <p class="text-center text-white-50 small mb-0">
                 &copy; 2026 Pizzeria <i>Bella Napoli</i>. Todos los derechos reservados.
