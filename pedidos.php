@@ -137,14 +137,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="index.php">
                 <span class="text-white"><i>Bella<span class="text-warning">Napoli</span></i></span>
             </a>
-         
+        
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false"
                 aria-label="Abrir navegación">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-           
+        
             <div class="collapse navbar-collapse" id="menuNavegacion">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
