@@ -4,8 +4,11 @@ $masas = [
     "Delgada / Crocante"      => 0,
     "Orilla rellena de queso" => 30
 ];
-
-$masa = "";
+$salsas = ["Pomodoro clásica", "Salsa blanca Alfredo", "Pesto genovés", "Barbacoa dulce"];
+$quesos = ["Mozzarella fresco", "Queso parmesano reggiano", "Queso provolone"];
+$masa  = "";
+$salsa = "";
+$queso = "";
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +37,7 @@ $masa = "";
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="arma_pizza.php">Arma tu pizza</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="armar_pizza.php">Arma tu pizza</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Pedidos</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
@@ -69,6 +72,37 @@ $masa = "";
                                             <?php if ($recargo > 0) { ?>
                                                 <span class="badge bg-warning text-dark">+ L. <?= number_format($recargo, 2) ?></span>
                                             <?php } ?>
+                                        </label>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-white fw-bold py-3">
+                                <i class="bi bi-2-circle-fill text-danger me-2"></i>Elige tu salsa base
+                            </div>
+                            <div class="card-body">
+                                <select name="salsa" class="form-select">
+                                    <option value="">-- Selecciona una salsa --</option>
+                                    <?php foreach ($salsas as $nombre) { ?>
+                                        <option value="<?= $nombre ?>" <?= ($salsa == $nombre) ? "selected" : "" ?>>
+                                            <?= $nombre ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-white fw-bold py-3">
+                                <i class="bi bi-3-circle-fill text-danger me-2"></i>Elige tu queso principal
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group">
+                                    <?php foreach ($quesos as $nombre) { ?>
+                                        <label class="list-group-item">
+                                            <input class="form-check-input me-2" type="radio" name="queso"
+                                                value="<?= $nombre ?>" <?= ($queso == $nombre) ? "checked" : "" ?>>
+                                            <?= $nombre ?>
                                         </label>
                                     <?php } ?>
                                 </div>
@@ -132,11 +166,11 @@ $masa = "";
             </p>
         </div>
     </footer>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-
+        
 </body>
 
 </html>
