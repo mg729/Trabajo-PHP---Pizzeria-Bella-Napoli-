@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Catálogo - Bella Napoli</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
 </head>
 <body class="bg-light">
 
@@ -101,6 +103,58 @@
             </section>
         <?php endforeach; ?>
     </div>
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4">
+
+                <!--Logo y banner-->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h3 class="fw-bold fst-italic mb-3">Bella<span class="text-warning">Napoli</span></h3>
+                    <p class="text-white-50 mb-0">
+                        Autentica pizza italiana horneada con leña, usando los ingredientes mas frescos y la receta tradicional que cautiva los paladares en todo Honduras.
+                    </p>
+                </div>
+
+                <!--Horarios-->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Horarios de cocina</h4>
+                    <ul class="list-unstyled text-white-50 mb-0">
+                        <li class="mb-2"><i class="bi bi-clock me-2"></i>Lunes a Jueves: 11:00 a.m. - 9:00 p.m.</li>
+                        <li class="mb-2"><i class="bi bi-clock me-2"></i>Viernes y Sábado: 11:00 a.m. - 11:00 p.m.</li>
+                        <li><i class="bi bi-clock me-2"></i>Domingo: 12:00 p.m. - 8:00 p.m.</li>
+                    </ul>
+                </div>
+
+                <!--Contacto-->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Contacto</h4>
+                    <ul class="list-unstyled text-white-50 mb-0">
+                        <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Blvd. Morazán, Tegucigalpa, Honduras</li>
+                        <li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>+504 2222-3333</li>
+                        <li><i class="bi bi-envelope-fill me-2"></i>contacto@bellanapoli.hn</li>
+                    </ul>
+                </div>
+
+                <!--Redes sociales-->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Siguenos</h4>
+                    <div class="d-flex gap-3 fs-3">
+                        <a class="text-white" href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a class="text-white" href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a class="text-white" href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                        <a class="text-white" href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Derechos-->
+            <hr class="border-secondary my-4">
+            <p class="text-center text-white-50 small mb-0">
+                &copy; 2026 Pizzeria <i>Bella Napoli</i>. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
