@@ -41,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     }
 
     //VALIDACIONES
-    if(mb_strlen($datos["nombre"]) < 5){$errores[] = "Nombre y apellido se encuentran vacios.";}
+    if(mb_strlen($datos["nombre"]) < 5){$errores[] = "Nombre y apellido se encuentran vacios. Minimo 3 caracteres";}
 
     if(!preg_match("/^\d{14}$/", $datos["rtn"])){$errores[] = "RTN no cumple los 14 caracteres.";}
 
@@ -54,21 +54,64 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $producto = $productos[$datos["pizza"]] ?? null;
     if($producto ==null){
         $errores[] = "Selecciona un producto.";
-    }elseif ($producto["tipo"] === "pizza" && !isset($tamanos[$datos["tamano"]])){
+    }elseif($producto["tipo"] === "pizza" && !isset($tamanos[$datos["tamano"]]))
+    {
         $errores[] = "Selecciona el tamaño de la pizza.";
     }
 
     $cantidad = filter_var($datos["cantidad"], FILTER_VALIDATE_INT);
-    if($cantidad === false || $cantidad <=0){
-        $errores[] = "Solo numeros positivos.";
-    }
-    elseif(!is_numeric($datos["recargo"] || $datos["recargo"] <0) ){$errores[] = "Recargo por ingredientes invalido.";}
-    elseif(!isset($modalidades[$datos["modalidad"]])){
-        $errores[] ="Selecciona una modalidad de entrega";
-    }
-    elseif(!isset($pagos[$datos])){$errores[]="Selecciones un metodo de pago.";}
+    if($cantidad === false || $cantidad <=0){$errores[] = "Solo numeros positivos.";}
 
-    //
+    if(!is_numeric($datos["recargo"]) || $datos["recargo"] < 0){$errores[] = "Recargo por ingredientes invalido.";}
+    
+    if(!isset($modalidades[$datos["modalidad"]])){$errores[] ="Selecciona una modalidad de entrega";}
+    
+    if(!isset($pagos[$datos["pago"]])){$errores[]="Selecciona un metodo de pago.";}
+    
+    //Calculos
+    if(empty($errores)){
+        $precioUnitario = ($producto["tipo"] === "pizza") ? 
+        $producto["precios"][$datos["tamano"]] : $producto["precio"];
+        
+        $recargo = (float) $datos["recargo"];
+
+        $subtotal= ($precioUnitario + $recargo) * $cantidad;
+        $descuento = ($cantidad >=3) ? $subtotal*0.10 : 0;
+        $neto = $subtotal - $descuento;
+        $isv = $neto * 0.15;
+        $delivery = ($datos["modalidad"] === "delivery") ? 45.0 : 0.0;
+        $total = $subtotal - $descuento + $isv + $delivery;
+
+        $tamanoTxt = ($producto["tipo"] === "pizza") ? " (" . $tamanos[$datos["tamano"]] . ")" : "";
+
+        $orden = [
+            'folio'     => 'ORD-NAP-' . random_int(10000, 99999),
+            'fecha'     => date('d/m/Y H:i'),
+            'cliente'   => $datos['nombre'],
+            'rtn'       => $datos['rtn'],
+            'telefono'  => $datos['telefono'],
+            'correo'    => $datos['correo'],
+            'direccion' => $datos['direccion'],
+            'detalle'   => $cantidad . ' x ' . $datos['pizza'] . $tamanoTxt,
+            'personalizacion' => $datos['personalizacion'],
+            'modalidad' => $modalidades[$datos['modalidad']],
+            'pago'      => $pagos[$datos['pago']],
+            'precio_unitario' => $precioUnitario,
+            'recargo'   => $recargo,
+            'cantidad'  => $cantidad,
+            'subtotal'  => $subtotal,
+            'descuento' => $descuento,
+            'isv'       => $isv,
+            'delivery'  => $delivery,
+            'total'     => $total,
+            'estado'    => 'Pendiente',
+        ];
+
+        //Persistencia de Sesion
+        $_SESSION["pedidos"][] = $orden;
+        $factura = $orden;
+    }
+
 }
 
 ?>
@@ -79,7 +122,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Pedidos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
@@ -123,10 +166,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         </div>
 
         <!--Alertas (Agregar)-->
-        <!--Alertas (Agregar)-->
         <?php foreach($errores as $error): ?>
             <div class="alert alert-danger" role="alert">
-                <i class ="bi bi-exclamation-triangle-fill me-2"><?= $error ?></i>
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <?= $error ?>
+                <i class="bi bi-receipt me-2"></i> Factura digital
             </div>
         <?php endforeach; ?>
 
@@ -198,7 +242,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
                             <!--Botones-->
                             <a class="btn btn-outline-success mx-2" href="pedidos.php">Realizar otro pedido</a>
-                            <a class="btn btn-outline-danger" href="#">Ver panel de ordenes</a>
+                            <a class="btn btn-outline-danger" href="sucursales.php">Ver panel de ordenes</a>
                         </div>
                         
                     </div>
@@ -206,7 +250,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             </div>
         <?php endif; ?>
 
-        <form class="mx-auto" method="POST" action="pedidos.php" style="max-width: 800px;">
+        <form class="mx-auto" method="POST" action="pedidos.php" novalidate style="max-width: 800px;">
             <!--1.Cliente-->
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-danger text-white fw-bold">
@@ -216,22 +260,22 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="nombre" class="form-label">Nombre y apellido</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" minlength="5"
-                                maxlength="15" placeholder="Ej. Maria Lopez" required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="<?= $datos["nombre"] ?>" minlength="5"
+                                maxlength="50" placeholder="Ej. Maria Lopez" required>
                         </div>
                         <div class="col-md-6">
                             <label for="rtn" class="form-label">RTN</label>
-                            <input type="text" class="form-control" id="rtn" name="rtn" inputmode="numeric"
+                            <input type="text" class="form-control" id="rtn" name="rtn" value="<?= $datos["rtn"] ?>" inputmode="numeric"
                                 maxlength="14" pattern="\d{14}" placeholder="14 digitos" required>
                         </div>
                         <div class="col-md-6">
                             <label for="telefono" class="form-label">Telefono</label>
-                            <input type="tel" class="form-control" id="telefono" name="telefono" inputmode="numeric"
+                            <input type="tel" class="form-control" id="telefono" name="telefono" value="<?= $datos["telefono"] ?>" inputmode="numeric"
                                 maxlength="8" pattern="\d{8}" placeholder="8 digitos" required>
                         </div>
                         <div class="col-md-6">
                             <label for="correo" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="correo" name="correo"
+                            <input type="email" class="form-control" id="correo" name="correo" value="<?= $datos["correo"] ?>"
                                 placeholder="correo@ejemplo.com" required>
                         </div>
                     </div>
@@ -248,46 +292,37 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                         <label for="direccion" class="form-label">Direccion y punto de referencia</label>
                         <textarea class="form-control" id="direccion" name="direccion" rows="3"
                             placeholder="Colonia, calle, casa y punto de referencia"
-                            style="max-height: 100px; min-height: 100px;" required></textarea>
+                            style="max-height: 100px; min-height: 100px;" required>
+                            <?= $datos["direccion"] ?>
+                        </textarea>
                     </div>
 
                     <div class="row g-3">
                         <div class="col-md-6">
                             <p class="form-label mb-2">Modalidad de entrega</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="modalidad" id="mod1"
-                                    value="restaurante" required>
-                                <label class="form-check-label" for="mod1">Para comer en restaurante</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="modalidad" id="mod2" value="pickup">
-                                <label class="form-check-label" for="mod2">Para llevar (Pick-Up)</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="modalidad" id="mod3"
-                                    value="delivery">
-                                <label class="form-check-label" for="mod3">
-                                    Envio a domicilio (Delivery) <span class="badge bg-warning text-dark">+ L.
-                                        45.00</span>
-                                </label>
-                            </div>
+
+                            <?php foreach ($modalidades as $clave => $texto): ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="modalidad" id="mod_<?= $clave ?>"
+                                    value="<?= $clave ?>" <?= $datos['modalidad'] === $clave ? 'checked' : '' ?> >
+                                    <label class="form-check-label" for="mod_<?= $clave ?>">
+                                        <?= $texto ?>
+                                        <?php if ($clave === 'delivery'): ?><span class="badge bg-warning text-dark">+ L. 45.00</span><?php endif; ?>
+                                    </label>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
 
                         <div class="col-md-6">
                             <p class="form-label mb-2">Metodo de pago</p>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="pago" id="pago1" value="efectivo"
-                                    required>
-                                <label class="form-check-label" for="pago1">Efectivo</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="pago" id="pago2" value="tarjeta">
-                                <label class="form-check-label" for="pago2">Tarjeta de credito / debito</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="pago" id="pago3" value="ach">
-                                <label class="form-check-label" for="pago3">Transferencia ACH</label>
-                            </div>
+                            <?php foreach ($pagos as $clave => $texto): ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="pago" id="pago_<?= $clave ?>" value="<?= $clave ?>"
+                                    <?= $datos['pago'] === $clave ? 'checked' : '' ?> >
+                                    <label class="form-check-label" for="pago_<?= $clave ?>"><?= $texto ?></label>
+                                </div>
+                            <?php endforeach; ?>
+
                         </div>
                     </div>
                 </div>
@@ -300,31 +335,38 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
+                        <!--Seleccion de pizza-->
                         <div class="col-md-5">
                             <label for="pizza" class="form-label">Pizza</label>
                             <select class="form-select" id="pizza" name="pizza" required>
-                                <option value="" selected disabled>Selecciona una pizza</option>
-                                <?php foreach ($pizzas as $p): ?>
-                                <option value="<?= htmlspecialchars($p, ENT_QUOTES, 'UTF-8') ?>">
-                                    <?= htmlspecialchars($p, ENT_QUOTES, 'UTF-8') ?>
-                                </option>
+                                <option value="" <?= $datos["pizza"] === "" ? "selected" : "" ?>>Selecciona una producto</option>
+                                <?php foreach ($catalogo as $categoria): ?>
+                                    <optgroup label="<?= $categoria['titulo'] ?>">
+                                        <?php foreach ($categoria['productos'] as $p): ?>
+                                            <option value="<?= $p['nombre'] ?>" <?= $datos['pizza'] === $p['nombre'] ? 'selected' : '' ?>>
+                                            <?= $p['nombre'] ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </optgroup>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+
+                        <!--Seleccion de Tamano-->
                         <div class="col-md-4">
                             <label for="tamano" class="form-label">Tamaño</label>
-                            <select class="form-select" id="tamano" name="tamano" required>
-                                <option value="" selected disabled>Selecciona un tamaño</option>
+                            <select class="form-select" id="tamano" name="tamano">
+                                <option value="">No aplica (calzones, postres, bebidas)</option>
                                 <?php foreach ($tamanos as $clave => $texto): ?>
-                                <option value="<?= $clave ?>">
-                                    <?= $texto ?>
-                                </option>
-                                <?php endforeach; ?>
+                                    <option value="<?= $clave ?>" <?= $datos["tamano"] === $clave ? "selected" : "" ?>><?= $texto ?></option>
+                                <?php endforeach;?>
                             </select>
                         </div>
+
+                        <!--Seleccion de cantidad-->
                         <div class="col-md-3">
                             <label for="cantidad" class="form-label">Cantidad</label>
-                            <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" value="1" max="100"
+                            <input type="number" class="form-control" id="cantidad" name="cantidad" min="1" value="<?= $datos["cantidad"] ?>" max="100"
                                 required>
                         </div>
                         <div class="col-12">
@@ -333,12 +375,18 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                             </label>
                             <textarea class="form-control" id="personalizacion" name="personalizacion" rows="3"
                                 placeholder="Ej. masa delgada, extra queso..." maxlength="280"
-                                style="max-height: 90px; min-height: 90px;"></textarea>
+                                style="max-height: 90px; min-height: 90px;">
+                                    <?= $datos["personalizacion"] ?>
+                            </textarea>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!---->
+            <div>
+                <input type="hidden" name="recargo" value="<?= $datos['recargo'] ?>">
+            </div>
             <!--4.Boton de pedido-->
             <div class="d-grid">
                 <button type="submit" class="btn btn-danger btn-lg">
