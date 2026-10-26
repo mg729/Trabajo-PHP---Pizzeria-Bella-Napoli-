@@ -51,13 +51,9 @@ $extras = [];
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
-<<<<<<< Updated upstream
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="arma_pizza.php">Arma tu pizza</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Pedidos</a></li>
-=======
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="armar_pizza.php">Arma tu pizza</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="pedidos.php">Pedidos</a></li>
->>>>>>> Stashed changes
+
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
             </div>
