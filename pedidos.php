@@ -62,9 +62,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     if($cantidad === false || $cantidad <=0){
         $errores[] = "Solo numeros positivos.";
     }
-    elseif(!is_numeric($datos["recargo"] || $datos["recargo"] <0) ){
-    $errores[] = "Recargo por ingredientes invalido.";
+    elseif(!is_numeric($datos["recargo"] || $datos["recargo"] <0) ){$errores[] = "Recargo por ingredientes invalido.";}
+    elseif(!isset($modalidades[$datos["modalidad"]])){
+        $errores[] ="Selecciona una modalidad de entrega";
     }
+    elseif(!isset($pagos[$datos])){$errores[]="Selecciones un metodo de pago.";}
+
+    //
 }
 
 ?>
@@ -119,6 +123,88 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         </div>
 
         <!--Alertas (Agregar)-->
+        <!--Alertas (Agregar)-->
+        <?php foreach($errores as $error): ?>
+            <div class="alert alert-danger" role="alert">
+                <i class ="bi bi-exclamation-triangle-fill me-2"><?= $error ?></i>
+            </div>
+        <?php endforeach; ?>
+
+        <?php if($factura): ?>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card shadow-sm border-0 mb-4">
+                        <div class="card-header bg-success text-white fw-bold d-flex justify-content-between">
+                            <span><i class="bi bi-receipt me-2"> Factura digital</i></span>
+                            <span><?= $factura["folio"] ?></span>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-1"><strong>Fecha:</strong> <?= $factura["fecha"] ?></p>
+                            <p class="mb-1"><strong>Cliente:</strong> <?= $factura["cliente"] ?></p>
+                            <p class="mb-1"><strong>RTN:</strong> <?= $factura["rtn"] ?></p>
+                            <p class="mb-1"><strong>Telefono:</strong> <?= $factura["telefono"] ?></p>
+                            <p class="mb-1"><strong>Entrega:</strong> <?= $factura["modalidad"] ?></p>
+                            <p class="mb-1"><strong>Pago:</strong> <?= $factura["pago"] ?></p>
+
+                            <!--Tabla-->
+                            <table class="table table-sm align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Detalle</th>
+                                        <th class="text-end">Precio unid.</th>
+                                        <th class="text-end">Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> <?= $factura["detalle"] ?> </td>
+                                        <td class="text-end">L. <?= number_format($factura["precio_unitario"] + $factura["recargo"], 2) ?></td>
+                                        <td class="text-end">L. <?= number_format($factura["subtotal"], 2) ?></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="2" class="text-end">Subtotal</td>
+                                        <td class="text-end">
+                                            L. <?= number_format($factura["subtotal"], 2) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-end">Descuento <span class="text-muted">(10% por 3 o mas)</span></td>
+                                        <td class="text-end">
+                                            L. <?= number_format($factura["descuento"], 2) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-end">ISV <span class="text-muted">(15%)</span></td>
+                                        <td class="text-end">
+                                            L. <?= number_format($factura["isv"], 2) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-end">Delivery</td>
+                                        <td class="text-end">
+                                            L. <?= number_format($factura["delivery"], 2) ?>
+                                        </td>
+                                    </tr>
+                                    <tr class="table-danger fw-bold">
+                                        <td colspan="2" class="text-end">Total A Pagar</td>
+                                        <td class="text-end">
+                                            L. <?= number_format($factura["total"], 2) ?>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                            <!--Botones-->
+                            <a class="btn btn-outline-success mx-2" href="pedidos.php">Realizar otro pedido</a>
+                            <a class="btn btn-outline-danger" href="#">Ver panel de ordenes</a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 
         <form class="mx-auto" method="POST" action="pedidos.php" style="max-width: 800px;">
             <!--1.Cliente-->
