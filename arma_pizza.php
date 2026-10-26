@@ -1,14 +1,80 @@
 <?php
+session_start();
+
 $masas = [
     "Tradicional italiana"    => 0,
     "Delgada / Crocante"      => 0,
-    "Orilla rellena de queso" => 30
+    "Orilla rellena de queso" => 30 
 ];
+
 $salsas = ["Pomodoro clásica", "Salsa blanca Alfredo", "Pesto genovés", "Barbacoa dulce"];
 $quesos = ["Mozzarella fresco", "Queso parmesano reggiano", "Queso provolone"];
-$masa  = "";
-$salsa = "";
-$queso = "";
+$ingredientes = [
+    "Pepperoni"              => 25,
+    "Jamón de pavo"          => 20,
+    "Champiñones frescos"    => 15,
+    "Pimientos morrones"     => 10,
+    "Aceitunas negras"       => 12,
+    "Albahaca fresca"        => 8,
+    "Tocineta ahumada"       => 30,
+    "Carne molida artesanal" => 35
+];
+
+
+$masa    = "";
+$salsa   = "";
+$queso   = "";
+$extras  = [];
+$errores = [];
+$resumen = null;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $masa  = htmlspecialchars($_POST["masa"]  ?? "", ENT_QUOTES, "UTF-8");
+    $salsa = htmlspecialchars($_POST["salsa"] ?? "", ENT_QUOTES, "UTF-8");
+    $queso = htmlspecialchars($_POST["queso"] ?? "", ENT_QUOTES, "UTF-8");
+
+    $extras_recibidos = $_POST["extras"] ?? [];
+    foreach ($extras_recibidos as $extra) {
+        $extras[] = htmlspecialchars($extra, ENT_QUOTES, "UTF-8");
+    }
+
+    if ($masa == "" || !array_key_exists($masa, $masas)) {
+        $errores[] = "Debes seleccionar un tipo de masa.";
+    }
+    if ($salsa == "" || !in_array($salsa, $salsas)) {
+        $errores[] = "Debes seleccionar una salsa base.";
+    }
+    if ($queso == "" || !in_array($queso, $quesos)) {
+        $errores[] = "Debes seleccionar un queso principal.";
+    }
+    foreach ($extras as $extra) {
+        if (!array_key_exists($extra, $ingredientes)) {
+            $errores[] = "Ingrediente no válido: " . $extra;
+        }
+    }
+
+    if (count($errores) == 0) {
+        $recargo_masa = $masas[$masa];
+
+        $recargo_extras = 0;
+        foreach ($extras as $extra) {
+            $recargo_extras += $ingredientes[$extra];
+        }
+
+        $resumen = [
+            "masa"           => $masa,
+            "salsa"          => $salsa,
+            "queso"          => $queso,
+            "extras"         => $extras,
+            "recargo_masa"   => $recargo_masa,
+            "recargo_extras" => $recargo_extras,
+            "total_recargos" => $recargo_masa + $recargo_extras
+        ];
+
+        $_SESSION["pizza_personalizada"] = $resumen;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +103,9 @@ $queso = "";
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="armar_pizza.php">Arma tu pizza</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Pedidos</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="arma_pizza.php">Arma tu pizza</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="pedidos.php">Pedidos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="sucursales.php">Sucursales y contacto</a></li>
                 </ul>
             </div>
         </div>
@@ -55,7 +121,16 @@ $queso = "";
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-8">
-                    <form method="POST" action="armar_pizza.php">
+                    <?php if (count($errores) > 0) { ?>
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                <?php foreach ($errores as $error) { ?>
+                                    <li><?= $error ?></li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    <?php } ?>
+                    <form method="POST" action="arma_pizza.php">
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-white fw-bold py-3">
                                 <i class="bi bi-1-circle-fill text-danger me-2"></i>Elige tu masa
@@ -108,6 +183,36 @@ $queso = "";
                                 </div>
                             </div>
                         </div>
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-white fw-bold py-3">
+                                <i class="bi bi-4-circle-fill text-danger me-2"></i>Ingredientes adicionales
+                                <small class="text-muted fw-normal">(puedes elegir varios)</small>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-2">
+                                    <?php foreach ($ingredientes as $nombre => $precio) { ?>
+                                        <div class="col-md-6">
+                                            <label class="list-group-item d-flex justify-content-between align-items-center rounded">
+                                                <span>
+                                                    <input class="form-check-input me-2" type="checkbox" name="extras[]"
+                                                        value="<?= $nombre ?>" <?= in_array($nombre, $extras) ? "checked" : "" ?>>
+                                                    <?= $nombre ?>
+                                                </span>
+                                                <span class="badge bg-warning text-dark">+ L. <?= number_format($precio, 2) ?></span>
+                                            </label>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex">
+                            <button type="submit" class="btn btn-danger btn-lg px-4 shadow rounded-4">
+                                <i class="bi bi-check-circle me-2"></i>Armar mi pizza
+                            </button>
+                            <a href="arma_pizza.php" class="btn btn-outline-dark btn-lg px-4 rounded-4">
+                                <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar
+                            </a>
+                        </div>
                     </form>
                 </div>
                 <div class="col-lg-4">
@@ -116,7 +221,29 @@ $queso = "";
                             <i class="bi bi-receipt me-2"></i>Tu pizza
                         </div>
                         <div class="card-body">
-                            <p class="text-muted mb-0">Aquí aparecerá el resumen de tu pizza.</p>
+                            <?php if ($resumen == null) { ?>
+                                <p class="text-muted mb-0">Cuando envíes tu pizza, aquí verás el resumen y el total de recargos.</p>
+                            <?php } else { ?>
+                                <p class="mb-1"><strong>Masa:</strong> <?= $resumen["masa"] ?>
+                                    (+ L. <?= number_format($resumen["recargo_masa"], 2) ?>)</p>
+                                <p class="mb-1"><strong>Salsa:</strong> <?= $resumen["salsa"] ?></p>
+                                <p class="mb-2"><strong>Queso:</strong> <?= $resumen["queso"] ?></p>
+                                <p class="mb-1"><strong>Ingredientes adicionales:</strong></p>
+                                <?php if (count($resumen["extras"]) == 0) { ?>
+                                    <p class="text-muted">Ninguno</p>
+                                <?php } else { ?>
+                                    <ul class="list-unstyled">
+                                        <?php foreach ($resumen["extras"] as $extra) { ?>
+                                            <li><i class="bi bi-check2 text-success me-1"></i><?= $extra ?>
+                                                - L. <?= number_format($ingredientes[$extra], 2) ?></li>
+                                        <?php } ?>
+                                    </ul>
+                                <?php } ?>
+                                <hr>
+                                <p class="fs-5 fw-bold text-danger mb-0">
+                                    Total de recargos: L. <?= number_format($resumen["total_recargos"], 2) ?>
+                                </p>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -166,11 +293,11 @@ $queso = "";
             </p>
         </div>
     </footer>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-        
+
 </body>
 
 </html>
