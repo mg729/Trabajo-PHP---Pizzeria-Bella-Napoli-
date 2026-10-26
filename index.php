@@ -103,25 +103,25 @@ $testimonios = [
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!--menu desplegable-->
+            
             <div class="collapse navbar-collapse" id="menuNavegacion">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Arma tu pizza</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Pedidos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="arma_pizza.php">Arma tu pizza</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="pedidos.php">Pedidos</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!--Hero-->
+
     <header class="bg-gradient text-black my-5">
         <div class="container">
             <div class="row align-items-center g-4">
 
-                <!--Txt-->
+               
                 <div class="col-lg-6 text-center text-lg-start">
                     <span class="badge bg-danger fs-6 mb-3">Horno de leña desde 1967</span>
                     <h1 class="display-3 fw-bold"> Bella<span class="text-warning">Napolli</span></h1>
@@ -134,7 +134,7 @@ $testimonios = [
                     </div>
                 </div>
 
-                <!--Img-->
+             
                 <div class="col-lg-6 text-center">
                     <img class="img-fluid rounded-4 shadow-lg"
                         src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F31450871%2Fpexels-photo-31450871.jpeg%3Fcs%3Dsrgb%26dl%3Dpexels-pedrofurtadoo-31450871.jpg%26fm%3Djpg&f=1&nofb=1&ipt=7f6ea179b82ec760664922787467459e7b72deed0dbea18c1b13ad410239b73f&ipo=images"
@@ -145,7 +145,7 @@ $testimonios = [
         </div>
     </header>
 
-    <!--Pizzas Insignias: plantilla de las cards-->
+
     <section class="bg-dark py-5 my-5">
         <article class="container">
             <div class=" text-white text-center mb-5">
@@ -187,7 +187,7 @@ $testimonios = [
         </article>
     </section>
 
-    <!--Promociones-->
+  
     <section class="bg-light py-5">
         <div class="container">
             <div class="text-center mb-5">
@@ -218,8 +218,7 @@ $testimonios = [
         </div>
     </section>
 
-    
-    <!--Historias y tesmimonios-->
+
     <section class="py-5">
         <div class="container">
             <div class="text-center mb-5">
@@ -260,12 +259,11 @@ $testimonios = [
         </div>
     </section>
 
-    <!--footer-->
+  
     <footer class="bg-dark text-white pt-5 pb-3">
         <div class="container">
             <div class="row g-4">
 
-                <!--Logo y banner-->
                 <div class="col-12 col-md-6 col-lg-3">
                     <h3 class="fw-bold fst-italic mb-3">Bella<span class="text-warning">Napoli</span></h3>
                     <p class="text-white-50 mb-0">
@@ -273,7 +271,7 @@ $testimonios = [
                     </p>
                 </div>
 
-                <!--Horarios-->
+           
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Horarios de cocina</h4>
                     <ul class="list-unstyled text-white-50 mb-0">
@@ -283,7 +281,7 @@ $testimonios = [
                     </ul>
                 </div>
 
-                <!--Contacto-->
+             
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Contacto</h4>
                     <ul class="list-unstyled text-white-50 mb-0">
@@ -293,7 +291,7 @@ $testimonios = [
                     </ul>
                 </div>
 
-                <!--Redes sociales-->
+                
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Siguenos</h4>
                     <div class="d-flex gap-3 fs-3">
@@ -306,7 +304,7 @@ $testimonios = [
 
             </div>
 
-            <!--Derechos-->
+           
             <hr class="border-secondary my-4">
             <p class="text-center text-white-50 small mb-0">
                 &copy; 2026 Pizzeria <i>Bella Napoli</i>. Todos los derechos reservados.
@@ -314,7 +312,7 @@ $testimonios = [
         </div>
     </footer>
 
-    <!--Js Bootstrap-->
+  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>

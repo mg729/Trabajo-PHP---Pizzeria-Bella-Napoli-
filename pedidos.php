@@ -1,9 +1,9 @@
 <?php
-//pizzas.php
+
 session_start();
 require_once 'pizzas.php';
 
-//Lista para buscar productos po nombre
+
 $productos = [];
 foreach ($catalogo as $categoria){
     foreach ($categoria["productos"] as $p){
@@ -11,20 +11,20 @@ foreach ($catalogo as $categoria){
     $productos[$p["nombre"]] = $p;
     }
 }
-//modalidad de entrega
+
 $modalidades = [
     'restaurante' => 'Para comer en restaurante',
     'pickup'      => 'Para llevar (Pick-Up)',
     'delivery'    => 'Envio a domicilio (Delivery)',
 ];
-//metodo de pago
+
 $pagos = [
     'efectivo' => 'Efectivo',
     'tarjeta'  => 'Tarjeta de credito / debito',
     'ach'      => 'Transferencia ACH',
 ];
 
-$errores=[]; //Lista de errores encontrados en el form
+$errores=[]; 
 $factura=null;
 $datos = [
     'nombre' => '', 'rtn' => '', 'telefono' => '', 'correo' => '',
@@ -32,10 +32,10 @@ $datos = [
     'modalidad' => '', 'pago' => '', 'personalizacion' => '', 'recargo' => '0',
 ];
 
-//llamado de form usando POST
+
 if($_SERVER["REQUEST_METHOD"] === "POST"){
 
-    //Sanitizacion recibida del post
+
     foreach($datos as $campo => $valor){
         $datos[$campo] = htmlspecialchars(trim($_POST[$campo] ?? ''), ENT_QUOTES, "UTF-8");
     }
@@ -68,7 +68,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     }
     elseif(!isset($pagos[$datos])){$errores[]="Selecciones un metodo de pago.";}
 
-    //
+
 }
 
 ?>
@@ -87,26 +87,26 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 </head>
 
 <body>
-    <!--Navbar-->
+
     <!--NOTA: El color del navbar es rojo, solo es temporal. Cualquier cambio mencionarlo :) -->
     <nav class="navbar navbar-expand-lg sticky-top bg-danger">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="index.php">
                 <span class="text-white"><i>Bella<span class="text-warning">Napoli</span></i></span>
             </a>
-            <!--btn hamburguesa-->
+         
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false"
                 aria-label="Abrir navegación">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!--menu desplegable-->
+           
             <div class="collapse navbar-collapse" id="menuNavegacion">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Arma tu pizza</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="arma_pizza.php">Arma tu pizza</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="pedidos.php">Pedidos</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
@@ -115,15 +115,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     </nav>
 
 
-    <!--Formulario-->
+
     <main class="container my-5">
         <div class="text-center mb-4">
             <h1 class="fw-bold">Confirmar tu <span class="text-danger">pedido</span></h1>
             <p class="text-muted">Completa los datos para terminar tu pedido.</p>
         </div>
 
-        <!--Alertas (Agregar)-->
-        <!--Alertas (Agregar)-->
+     
         <?php foreach($errores as $error): ?>
             <div class="alert alert-danger" role="alert">
                 <i class ="bi bi-exclamation-triangle-fill me-2"><?= $error ?></i>
@@ -207,7 +206,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         <?php endif; ?>
 
         <form class="mx-auto" method="POST" action="pedidos.php" style="max-width: 800px;">
-            <!--1.Cliente-->
+        
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-danger text-white fw-bold">
                     <i class="bi bi-person-fill me-2"></i>Información del cliente
@@ -238,7 +237,6 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 </div>
             </div>
 
-            <!--2.Entrega y pago-->
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-danger text-white fw-bold">
                     <i class="bi bi-truck me-2"></i>Entrega y pago
@@ -293,7 +291,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 </div>
             </div>
 
-            <!--3.Pedido-->
+            
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-danger text-white fw-bold">
                     <i class="bi bi-basket-fill me-2"></i>Tu pedido
@@ -339,7 +337,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
                 </div>
             </div>
 
-            <!--4.Boton de pedido-->
+            
             <div class="d-grid">
                 <button type="submit" class="btn btn-danger btn-lg">
                     <i class="bi bi-check-circle-fill me-2"></i>Confirmar pedido
@@ -348,8 +346,60 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         </form>
     </main>
+    <footer class="bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row g-4">
 
-    <!--Js Bootstrap-->
+             
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h3 class="fw-bold fst-italic mb-3">Bella<span class="text-warning">Napoli</span></h3>
+                    <p class="text-white-50 mb-0">
+                        Autentica pizza italiana horneada con leña, usando los ingredientes mas frescos y la receta tradicional que cautiva los paladares en todo Honduras.
+                    </p>
+                </div>
+
+           
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Horarios de cocina</h4>
+                    <ul class="list-unstyled text-white-50 mb-0">
+                        <li class="mb-2"><i class="bi bi-clock me-2"></i>Lunes a Jueves: 11:00 a.m. - 9:00 p.m.</li>
+                        <li class="mb-2"><i class="bi bi-clock me-2"></i>Viernes y Sábado: 11:00 a.m. - 11:00 p.m.</li>
+                        <li><i class="bi bi-clock me-2"></i>Domingo: 12:00 p.m. - 8:00 p.m.</li>
+                    </ul>
+                </div>
+
+            
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Contacto</h4>
+                    <ul class="list-unstyled text-white-50 mb-0">
+                        <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Blvd. Morazán, Tegucigalpa, Honduras</li>
+                        <li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>+504 2222-3333</li>
+                        <li><i class="bi bi-envelope-fill me-2"></i>contacto@bellanapoli.hn</li>
+                    </ul>
+                </div>
+
+                
+                <div class="col-12 col-md-6 col-lg-3">
+                    <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Siguenos</h4>
+                    <div class="d-flex gap-3 fs-3">
+                        <a class="text-white" href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a class="text-white" href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a class="text-white" href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                        <a class="text-white" href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <hr class="border-secondary my-4">
+            <p class="text-center text-white-50 small mb-0">
+                &copy; 2026 Pizzeria <i>Bella Napoli</i>. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
