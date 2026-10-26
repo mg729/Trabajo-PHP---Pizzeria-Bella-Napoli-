@@ -1,4 +1,73 @@
-<?php?>
+<?php
+//pizzas.php
+session_start();
+require_once 'pizzas.php';
+
+//Lista para buscar productos po nombre
+$productos = [];
+foreach ($catalogo as $categoria){
+    foreach ($categoria["productos"] as $p){
+    $p["tipo"] = $categoria["tipo"]; //precio por tamn
+    $productos[$p["nombre"]] = $p;
+    }
+}
+//modalidad de entrega
+$modalidades = [
+    'restaurante' => 'Para comer en restaurante',
+    'pickup'      => 'Para llevar (Pick-Up)',
+    'delivery'    => 'Envio a domicilio (Delivery)',
+];
+//metodo de pago
+$pagos = [
+    'efectivo' => 'Efectivo',
+    'tarjeta'  => 'Tarjeta de credito / debito',
+    'ach'      => 'Transferencia ACH',
+];
+
+$errores=[]; //Lista de errores encontrados en el form
+$factura=null;
+$datos = [
+    'nombre' => '', 'rtn' => '', 'telefono' => '', 'correo' => '',
+    'direccion' => '', 'pizza' => '', 'tamano' => '', 'cantidad' => '1',
+    'modalidad' => '', 'pago' => '', 'personalizacion' => '', 'recargo' => '0',
+];
+
+//llamado de form usando POST
+if($_SERVER["REQUEST_METHOD"] === "POST"){
+
+    //Sanitizacion recibida del post
+    foreach($datos as $campo => $valor){
+        $datos[$campo] = htmlspecialchars(trim($_POST[$campo] ?? ''), ENT_QUOTES, "UTF-8");
+    }
+
+    //VALIDACIONES
+    if(mb_strlen($datos["nombre"]) < 5){$errores[] = "Nombre y apellido se encuentran vacios.";}
+
+    if(!preg_match("/^\d{14}$/", $datos["rtn"])){$errores[] = "RTN no cumple los 14 caracteres.";}
+
+    if(!preg_match("/^\d{8}$/",  $datos["telefono"])){$errores[] = "Numero incompleto. Debe cumplir los 8 caracteres.";}
+
+    if(!filter_var($datos["correo"], FILTER_VALIDATE_EMAIL)){$errores[] = "Correo invalido.";}
+
+    if($datos["direccion"] ===  ""){$errores[]= "Direccion de entrega obligatorio.";}
+
+    $producto = $productos[$datos["pizza"]] ?? null;
+    if($producto ==null){
+        $errores[] = "Selecciona un producto.";
+    }elseif ($producto["tipo"] === "pizza" && !isset($tamanos[$datos["tamano"]])){
+        $errores[] = "Selecciona el tamaño de la pizza.";
+    }
+
+    $cantidad = filter_var($datos["cantidad"], FILTER_VALIDATE_INT);
+    if($cantidad === false || $cantidad <=0){
+        $errores[] = "Solo numeros positivos.";
+    }
+    elseif(!is_numeric($datos["recargo"] || $datos["recargo"] <0) ){
+    $errores[] = "Recargo por ingredientes invalido.";
+    }
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="es">
