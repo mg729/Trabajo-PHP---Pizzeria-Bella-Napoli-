@@ -1,17 +1,14 @@
 <?php
 session_start();
 
-// ---------- DATOS (precios en Lempiras) ----------
 $masas = [
     "Tradicional italiana"    => 0,
     "Delgada / Crocante"      => 0,
-    "Orilla rellena de queso" => 30   // recargo
+    "Orilla rellena de queso" => 30 
 ];
 
 $salsas = ["Pomodoro clásica", "Salsa blanca Alfredo", "Pesto genovés", "Barbacoa dulce"];
-
 $quesos = ["Mozzarella fresco", "Queso parmesano reggiano", "Queso provolone"];
-
 $ingredientes = [
     "Pepperoni"              => 25,
     "Jamón de pavo"          => 20,
@@ -23,7 +20,7 @@ $ingredientes = [
     "Carne molida artesanal" => 35
 ];
 
-// ---------- VALORES INICIALES ----------
+
 $masa    = "";
 $salsa   = "";
 $queso   = "";
@@ -31,10 +28,8 @@ $extras  = [];
 $errores = [];
 $resumen = null;
 
-// ---------- PROCESAR FORMULARIO ----------
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Sanitizar
     $masa  = htmlspecialchars($_POST["masa"]  ?? "", ENT_QUOTES, "UTF-8");
     $salsa = htmlspecialchars($_POST["salsa"] ?? "", ENT_QUOTES, "UTF-8");
     $queso = htmlspecialchars($_POST["queso"] ?? "", ENT_QUOTES, "UTF-8");
@@ -44,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $extras[] = htmlspecialchars($extra, ENT_QUOTES, "UTF-8");
     }
 
-    // Validar
     if ($masa == "" || !array_key_exists($masa, $masas)) {
         $errores[] = "Debes seleccionar un tipo de masa.";
     }
@@ -60,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Calcular recargos si todo está bien
     if (count($errores) == 0) {
         $recargo_masa = $masas[$masa];
 
@@ -79,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             "total_recargos" => $recargo_masa + $recargo_extras
         ];
 
-        // Se guarda en sesión para que el módulo de checkout la pueda usar
         $_SESSION["pizza_personalizada"] = $resumen;
     }
 }
@@ -87,7 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -97,36 +88,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
     <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
 </head>
-
 <body>
-    <!--Navbar-->
     <nav class="navbar navbar-expand-lg sticky-top bg-danger">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center fw-bold fs-4" href="index.php">
                 <span class="text-white"><i>Bella<span class="text-warning">Napoli</span></i></span>
             </a>
-            <!--btn hamburguesa-->
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
                 data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false"
                 aria-label="Abrir navegación">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <!--menu desplegable-->
             <div class="collapse navbar-collapse" id="menuNavegacion">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="armar_pizza.php">Arma tu pizza</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="pedidos.php">Pedidos</a></li>
-
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <!--Encabezado-->
     <header class="my-5">
         <div class="container text-center">
             <span class="badge bg-danger fs-6 mb-3">Personaliza tu pedido</span>
@@ -134,16 +117,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p class="lead">Elige tu masa, tu salsa, tu queso y los ingredientes que más te gusten.</p>
         </div>
     </header>
-
-    <!--Armador-->
     <section class="bg-light py-5">
         <div class="container">
             <div class="row g-4">
-
-                <!--Formulario-->
                 <div class="col-lg-8">
-
-                    <!--Errores-->
                     <?php if (count($errores) > 0) { ?>
                         <div class="alert alert-danger">
                             <ul class="mb-0">
@@ -153,10 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </ul>
                         </div>
                     <?php } ?>
-
                     <form method="POST" action="arma_pizza.php">
-
-                        <!--MASA-->
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-white fw-bold py-3">
                                 <i class="bi bi-1-circle-fill text-danger me-2"></i>Elige tu masa
@@ -178,8 +152,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                         </div>
-
-                        <!--SALSA-->
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-white fw-bold py-3">
                                 <i class="bi bi-2-circle-fill text-danger me-2"></i>Elige tu salsa base
@@ -195,8 +167,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </select>
                             </div>
                         </div>
-
-                        <!--QUESO-->
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-white fw-bold py-3">
                                 <i class="bi bi-3-circle-fill text-danger me-2"></i>Elige tu queso principal
@@ -213,8 +183,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                         </div>
-
-                        <!--INGREDIENTES-->
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-white fw-bold py-3">
                                 <i class="bi bi-4-circle-fill text-danger me-2"></i>Ingredientes adicionales
@@ -237,8 +205,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                         </div>
-
-                        <!--Boton-->
                         <div class="d-grid gap-2 d-md-flex">
                             <button type="submit" class="btn btn-danger btn-lg px-4 shadow rounded-4">
                                 <i class="bi bi-check-circle me-2"></i>Armar mi pizza
@@ -249,8 +215,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </form>
                 </div>
-
-                <!--Resumen-->
                 <div class="col-lg-4">
                     <div class="card shadow-sm border-0 sticky-lg-top" style="top: 90px;">
                         <div class="card-header bg-danger text-white fw-bold py-3">
@@ -287,21 +251,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </section>
-
-    <!--footer-->
     <footer class="bg-dark text-white pt-5 pb-3">
         <div class="container">
             <div class="row g-4">
-
-                <!--Logo y banner-->
                 <div class="col-12 col-md-6 col-lg-3">
                     <h3 class="fw-bold fst-italic mb-3">Bella<span class="text-warning">Napoli</span></h3>
                     <p class="text-white-50 mb-0">
                         Autentica pizza italiana horneada con leña, usando los ingredientes mas frescos y la receta tradicional que cautiva los paladares en todo Honduras.
                     </p>
                 </div>
-
-                <!--Horarios-->
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Horarios de cocina</h4>
                     <ul class="list-unstyled text-white-50 mb-0">
@@ -310,8 +268,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <li><i class="bi bi-clock me-2"></i>Domingo: 12:00 p.m. - 8:00 p.m.</li>
                     </ul>
                 </div>
-
-                <!--Contacto-->
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Contacto</h4>
                     <ul class="list-unstyled text-white-50 mb-0">
@@ -320,8 +276,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <li><i class="bi bi-envelope-fill me-2"></i>contacto@bellanapoli.hn</li>
                     </ul>
                 </div>
-
-                <!--Redes sociales-->
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Siguenos</h4>
                     <div class="d-flex gap-3 fs-3">
@@ -333,16 +287,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
             </div>
-
-            <!--Derechos-->
             <hr class="border-secondary my-4">
             <p class="text-center text-white-50 small mb-0">
                 &copy; 2026 Pizzeria <i>Bella Napoli</i>. Todos los derechos reservados.
             </p>
         </div>
     </footer>
-
-    <!--Js Bootstrap-->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
