@@ -109,7 +109,7 @@ $testimonios = [
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Arma tu pizza</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Pedidos</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="pedidos.php">Pedidos</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
             </div>
@@ -297,10 +297,10 @@ $testimonios = [
                 <div class="col-12 col-md-6 col-lg-3">
                     <h4 class="h6 text-uppercase fw-bold text-warning mb-3">Siguenos</h4>
                     <div class="d-flex gap-3 fs-3">
-                        <a class="text-white" href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a class="text-white" href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a class="text-white" href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
-                        <a class="text-white" href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                        <a class="text-white" href="faceebook.com" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a class="text-white" href="instragram.com" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a class="text-white" href="tiktok.com" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+                        <a class="text-white" href="whatsapp.com" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
 
