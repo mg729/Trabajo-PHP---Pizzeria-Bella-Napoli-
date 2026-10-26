@@ -4,15 +4,29 @@ $masas = [
     "Delgada / Crocante"      => 0,
     "Orilla rellena de queso" => 30
 ];
+
 $salsas = ["Pomodoro clásica", "Salsa blanca Alfredo", "Pesto genovés", "Barbacoa dulce"];
 $quesos = ["Mozzarella fresco", "Queso parmesano reggiano", "Queso provolone"];
-$masa  = "";
-$salsa = "";
-$queso = "";
+$ingredientes = [
+    "Pepperoni"              => 25,
+    "Jamón de pavo"          => 20,
+    "Champiñones frescos"    => 15,
+    "Pimientos morrones"     => 10,
+    "Aceitunas negras"       => 12,
+    "Albahaca fresca"        => 8,
+    "Tocineta ahumada"       => 30,
+    "Carne molida artesanal" => 35
+];
+
+$masa   = "";
+$salsa  = "";
+$queso  = "";
+$extras = [];
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,7 +51,7 @@ $queso = "";
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="index.php">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="Catalogo.php">Catalogo</a></li>
-                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="armar_pizza.php">Arma tu pizza</a></li>
+                    <li class="nav-item"><a class="nav-link px-3 fw-bold" href="arma_pizza.php">Arma tu pizza</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Pedidos</a></li>
                     <li class="nav-item"><a class="nav-link px-3 fw-bold" href="">Sucursales y contacto</a></li>
                 </ul>
@@ -55,7 +69,7 @@ $queso = "";
         <div class="container">
             <div class="row g-4">
                 <div class="col-lg-8">
-                    <form method="POST" action="armar_pizza.php">
+                    <form method="POST" action="arma_pizza.php">
                         <div class="card shadow-sm border-0 mb-4">
                             <div class="card-header bg-white fw-bold py-3">
                                 <i class="bi bi-1-circle-fill text-danger me-2"></i>Elige tu masa
@@ -108,6 +122,33 @@ $queso = "";
                                 </div>
                             </div>
                         </div>
+                        <div class="card shadow-sm border-0 mb-4">
+                            <div class="card-header bg-white fw-bold py-3">
+                                <i class="bi bi-4-circle-fill text-danger me-2"></i>Ingredientes adicionales
+                                <small class="text-muted fw-normal">(puedes elegir varios)</small>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-2">
+                                    <?php foreach ($ingredientes as $nombre => $precio) { ?>
+                                        <div class="col-md-6">
+                                            <label class="list-group-item d-flex justify-content-between align-items-center rounded">
+                                                <span>
+                                                    <input class="form-check-input me-2" type="checkbox" name="extras[]"
+                                                        value="<?= $nombre ?>" <?= in_array($nombre, $extras) ? "checked" : "" ?>>
+                                                    <?= $nombre ?>
+                                                </span>
+                                                <span class="badge bg-warning text-dark">+ L. <?= number_format($precio, 2) ?></span>
+                                            </label>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-danger btn-lg px-4 shadow rounded-4">
+                                <i class="bi bi-check-circle me-2"></i>Armar mi pizza
+                            </button>
+                        </div>
                     </form>
                 </div>
                 <div class="col-lg-4">
@@ -158,7 +199,6 @@ $queso = "";
                         <a class="text-white" href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
-
             </div>
             <hr class="border-secondary my-4">
             <p class="text-center text-white-50 small mb-0">
@@ -166,11 +206,11 @@ $queso = "";
             </p>
         </div>
     </footer>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-        
+
 </body>
 
 </html>
